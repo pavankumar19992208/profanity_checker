@@ -1,0 +1,29 @@
+<!-- templates/upload.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Profanity Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.0.2-dist/css/bootstrap.min.css') }}"></head>
+<body>
+    <h1 class="text-center my-4">Upload a video to check for profanity</h1>
+    <form action="/process_video" method="post" enctype="multipart/form-data" class="mb-4">
+        <input type="file" name="video" accept="video/*" multiple required class="form-control mb-2">
+        <input type="submit" value="Upload" class="btn btn-primary">
+    </form>
+    <div class="d-flex flex-wrap justify-content-between">
+        {% for result in results %}
+        <div class="card m-2" style="width: 30%;">
+            <div class="card-header">
+                <h2 class="card-title">{{ result.filename }}</h2>
+            </div>
+            <div class="card-body">
+                <p>Total words: {{ result.all_words_count }}</p>
+                <p>Bad words: {{ result.bad_words_count }}</p>
+                <p>Percentage of bad words: {{ result.bad_words_percentage }}%</p>
+                <p>Bad words: {{ result.bad_words|join(", ") }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
